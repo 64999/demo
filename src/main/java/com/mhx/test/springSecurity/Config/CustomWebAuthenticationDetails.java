@@ -1,0 +1,32 @@
+package com.mhx.test.springSecurity.Config;
+
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
+
+import javax.servlet.http.HttpServletRequest;
+
+
+/**
+ * 获取用户登陆时的额外信息
+ */
+public class CustomWebAuthenticationDetails extends WebAuthenticationDetails {
+
+
+    private static final long serialVersionUID = 6975601077710753878L;
+    private final String verifyCode;
+    public String getVerifyCode() {
+        return this.verifyCode;
+    }
+
+    public CustomWebAuthenticationDetails(HttpServletRequest request) {
+        super(request);
+        // verifyCode为页面中验证码的name
+        this.verifyCode = request.getParameter("verifyCode");
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(super.toString()).append("; VerifyCode: ").append(this.getVerifyCode());
+        return sb.toString();
+    }
+}
